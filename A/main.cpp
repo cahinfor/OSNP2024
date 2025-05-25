@@ -10,8 +10,8 @@
 using namespace std;
 
 int main() {
-    string S;
-    cin >> S;
+  string S;
+  cin >> S;
 
-    cout << solve(S) << endl;
+  cout << solve(S) << endl;
 }

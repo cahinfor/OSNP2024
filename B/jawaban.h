@@ -7,4 +7,4 @@
 
 int solve(long long B, long long C, long long D);
 
-#endif //JAWABAN_H
+#endif // JAWABAN_H

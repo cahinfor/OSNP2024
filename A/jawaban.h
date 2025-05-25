@@ -10,6 +10,6 @@ using namespace std;
 
 int count_length(const string &start, const string &s);
 
-int solve(const string& s);
+int solve(const string &s);
 
-#endif //JAWABAN_H
+#endif // JAWABAN_H

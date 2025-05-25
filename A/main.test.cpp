@@ -10,11 +10,10 @@
 using namespace std;
 
 int main() {
-    assert(solve("OSN") == 3);
-    assert(solve("NASIONAL") == 4);
-    assert(solve("INFORMATIKA") == -1);
-    assert(solve("OSNNSONO") == 5);
+  assert(solve("OSN") == 3);
+  assert(solve("NASIONAL") == 4);
+  assert(solve("INFORMATIKA") == -1);
+  assert(solve("OSNNSONO") == 5);
 
-    cout << "All tests passed" << endl;
+  cout << "All tests passed" << endl;
 }
-

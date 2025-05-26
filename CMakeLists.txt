@@ -10,6 +10,8 @@ add_executable(Main2024B B/main.cpp
         B/jawaban.cpp)
 add_executable(Main2024C C/main.cpp
         C/jawaban.cpp)
+add_executable(Main2024D D/main.cpp
+        D/jawaban.cpp)
 
 # Test
 enable_testing()
@@ -24,3 +26,6 @@ add_test(NAME Jawaban2024B COMMAND OSNP2024B)
 add_executable(OSNP2024C C/main.test.cpp
         C/jawaban.cpp)
 add_test(NAME Jawaban2024C COMMAND OSNP2024C)
+add_executable(OSNP2024D D/main.test.cpp
+        D/jawaban.cpp)
+add_test(NAME Jawaban2024D COMMAND OSNP2024D)

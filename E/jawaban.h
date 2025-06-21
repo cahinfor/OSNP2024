@@ -5,8 +5,10 @@
 #ifndef JAWABAN_H
 #define JAWABAN_H
 
+#define ll long long
+
 using namespace std;
 
-long long solve(int N, const vector<int> &B, vector<int> G, const vector<int> &P, const vector<int> &Q);
+ll solve(const ll N, const vector<ll> &B, vector<ll> G, const vector<ll> &P, const vector<ll> &Q);
 
 #endif // JAWABAN_H

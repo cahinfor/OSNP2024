@@ -1,19 +1,19 @@
-#include <iostream>
-#include <set>
-#include <vector>
+#include <bits/stdc++.h>
+
+#define ll long long
 
 using namespace std;
 
-const int MAXN = 100005;
+const ll MAXN = 100005;
 
-int parent[MAXN];
+ll parent[MAXN];
 
-int find(const int x) {
+ll find(const ll x) {
     if (parent[x] == x) return x;
     return parent[x] = find(parent[x]);
 }
 
-void unite(int a, int b) {
+void unite(ll a, ll b) {
     a = find(a);
     b = find(b);
 
@@ -22,46 +22,59 @@ void unite(int a, int b) {
     }
 }
 
-long long solve(const int N, const vector<int> &B, vector<int> G, const vector<int> &P, const vector<int> &Q) {
-    for (int i = 0; i < N; ++i) {
+ll calculate_dissatisfaction(ll left, ll right, const vector<ll>& B, const vector<ll>& G) {
+    while (right - left > 3) {
+        ll mid1 = left + (right - left) / 3;
+        ll mid2 = right - (right - left) / 3;
+
+        ll d1 = 0, d2 = 0;
+        for (ll b : B) {
+            d1 += abs(b - G[mid1]);
+            d2 += abs(b - G[mid2]);
+        }
+
+        if (d1 < d2) {
+            right = mid2;
+        } else {
+            left = mid1;
+        }
+    }
+
+    // Brute-force over small range [left..right]
+    ll best = LLONG_MAX;
+    for (ll i = left; i <= right; ++i) {
+        ll d = 0;
+        for (ll b : B) d += abs(b - G[i]);
+        best = min(best, d);
+    }
+    return best;
+}
+
+
+ll solve(const ll N, const vector<ll> &B, vector<ll> G, const vector<ll> &P, const vector<ll> &Q) {
+    for (ll i = 0; i < N; ++i) {
         parent[i] = i;
     }
 
     // Hubungan gosip
-    for (int i = 0; i < P.size(); ++i) {
+    for (ll i = 0; i < P.size(); ++i) {
         unite(P[i]-1, Q[i]-1);
     }
 
     // Gabungkan bebek-bebek berdasarkan kelompok
-    unordered_map<int, vector<int>> groups;
-    for (int i = 0; i < N; ++i) {
+    unordered_map<ll, vector<ll>> groups;
+    for (ll i = 0; i < N; ++i) {
         groups[find(i)].push_back(B[i]);
     }
 
     // Sort semua tingkat kemanisan gulali untuk binary search
     ranges::sort(G);
+    G.erase(unique(G.begin(), G.end()), G.end());
 
-    long long total_dissatisfaction = 0;
+    ll total_dissatisfaction = 0;
 
     for (auto& [leader, bebek_group] : groups) {
-        long long best_dissatisfaction = LLONG_MAX;
-
-        set<int> checked;
-        for (int fav : bebek_group) {
-            auto it = lower_bound(G.begin(), G.end(), fav);
-            vector<int> candidates;
-            if (it != G.end()) candidates.push_back(*it);
-            if (it != G.begin()) candidates.push_back(*prev(it));
-            for (int g : candidates) {
-                if (checked.count(g)) continue;
-                checked.insert(g);
-                long long total = 0;
-                for (int f : bebek_group) total += abs(f - g);
-                best_dissatisfaction = min(best_dissatisfaction, total);
-            }
-        }
-
-        total_dissatisfaction += best_dissatisfaction;
+        total_dissatisfaction += calculate_dissatisfaction(0, G.size()-1, bebek_group, G);
     }
 
     return total_dissatisfaction;
